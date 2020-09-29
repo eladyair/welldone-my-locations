@@ -1,0 +1,11 @@
+.details {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    align-items: center;
+
+    &__title {
+        font-size: 2rem;
+        text-transform: uppercase;
+    }
+}
