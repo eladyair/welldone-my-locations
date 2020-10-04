@@ -1,0 +1,22 @@
+.location {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 0;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Lato';
+
+    &-data {
+        width: 25%;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        color: #123d68;
+    }
+}
+
+.selected > * {
+    color: #3289e0;
+}

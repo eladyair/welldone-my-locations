@@ -2,7 +2,7 @@ import { LOAD_CATEGORIES, ADD_NEW_CATEGORY, SET_SELECTED_CATEGORY, UPDATE_CATEGO
 
 const initialState = {
     title: 'categories',
-    selectedCategory: null,
+    selectedCategory: '',
     categories: [],
     error: null
 };
@@ -49,7 +49,7 @@ const categoryReducer = (state = initialState, action) => {
         case CLEAR_SELECTED_CATEGORY:
             return {
                 ...state,
-                selectedCategory: null
+                selectedCategory: ''
             };
         case DELETE_CATEGORY:
             storageCategories = JSON.parse(localStorage.getItem('categories')) ? JSON.parse(localStorage.getItem('categories')) : [];
@@ -60,7 +60,7 @@ const categoryReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categories: [...storageCategories],
-                selectedCategory: null
+                selectedCategory: ''
             };
         // case 'ERROR':
         //     return {

@@ -1,0 +1,37 @@
+.location-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 60%;
+    font-family: 'Lato';
+
+    &__title {
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    .view-detail {
+        width: 80%;
+        display: flex;
+        justify-content: flex-start;
+
+        &__inner {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__lbl {
+            width: 30%;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        &__val {
+            margin-left: 2rem;
+            display: inline-block;
+        }
+    }
+}

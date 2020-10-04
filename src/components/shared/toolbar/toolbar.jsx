@@ -1,32 +1,42 @@
 import React, { Fragment } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 
 // Styles
 import './toolbar.styles.scss';
 
-const Toolbar = ({ title, isCategories, selectedCategory, titleCB, newCB, deleteCB, editCB, viewCB }) => {
+const Toolbar = ({ match, history, title, isCollection, selected, deleteCB, clearCB }) => {
+    const handleDelete = () => {
+        deleteCB(selected);
+        history.push(match.path);
+    };
+
+    const handleClear = () => {
+        clearCB();
+    };
+
     return (
         <header className='toolbar'>
             <div className='toolbar__gutters'>
-                <h6 className='toolbar__title' onClick={titleCB}>
-                    {title}
-                </h6>
+                <Link to={`${match.path}`} className='toolbar__title-link' onClick={handleClear}>
+                    <h6 className='toolbar__title'>{title}</h6>
+                </Link>
                 <div className='toolbar__cta'>
-                    {isCategories && selectedCategory ? (
+                    {isCollection && selected ? (
                         <Fragment>
-                            <button type='button' className='btn' onClick={editCB}>
+                            <Link to={`${match.path}/edit`} className='btn btn-label'>
                                 <span>edit</span>
-                            </button>
-                            <button type='button' className='btn' onClick={viewCB}>
+                            </Link>
+                            <Link to={`${match.path}/view`} className='btn btn-label'>
                                 <span>view details</span>
-                            </button>
-                            <button type='button' className='btn' onClick={deleteCB}>
+                            </Link>
+                            <button type='button' className='btn' onClick={handleDelete}>
                                 <span>delete</span>
                             </button>
                         </Fragment>
                     ) : (
-                        <button type='button' className='btn' onClick={newCB}>
-                            <span className='btn__label'>New</span>
-                        </button>
+                        <Link to={`${match.path}/new`} className='btn btn-label'>
+                            <span>New</span>
+                        </Link>
                     )}
                 </div>
             </div>
@@ -34,4 +44,4 @@ const Toolbar = ({ title, isCategories, selectedCategory, titleCB, newCB, delete
     );
 };
 
-export default Toolbar;
+export default withRouter(Toolbar);

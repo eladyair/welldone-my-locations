@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { addNewCategory, updateCategory } from '../../../redux/category/category.actions';
-import { selectSelectedCategory } from '../../../redux/category/category.selectors';
+import { selectCategoryTitle, selectIsCategories, selectSelectedCategory } from '../../../redux/category/category.selectors';
 
 // Styles
 import './category-form.styles.scss';
 
-const CategoryForm = ({ addCB, editCB, addNewCategory, updateCategory, selectedCategory }) => {
+const CategoryForm = ({ history, addNewCategory, updateCategory, selectedCategory }) => {
     const [category, setCategory] = useState('');
 
     useEffect(() => {
@@ -34,39 +35,42 @@ const CategoryForm = ({ addCB, editCB, addNewCategory, updateCategory, selectedC
     const saveCategory = category => {
         if (!selectedCategory) {
             addNewCategory(category);
-            addCB();
         } else {
             updateCategory(category);
-            editCB();
         }
 
+        history.push('/categories');
         setCategory('');
     };
 
     return (
-        <div className='category-form'>
-            <input
-                type='text'
-                className='category-form__input'
-                placeholder='Add new category'
-                onChange={handleChange}
-                onKeyUp={handleKeyUp}
-                value={category}
-            />
-            {!selectedCategory ? (
-                <button className='category-form__btn' onClick={handleClick}>
-                    Add
-                </button>
-            ) : (
-                <button className='category-form__btn' onClick={handleClick}>
-                    Update
-                </button>
-            )}
-        </div>
+        <Fragment>
+            <div className='category-form'>
+                <input
+                    type='text'
+                    className='category-form__input'
+                    placeholder='Add new category'
+                    onChange={handleChange}
+                    onKeyUp={handleKeyUp}
+                    value={category}
+                />
+                {!selectedCategory ? (
+                    <button className='category-form__btn' onClick={handleClick}>
+                        Add
+                    </button>
+                ) : (
+                    <button className='category-form__btn' onClick={handleClick}>
+                        Update
+                    </button>
+                )}
+            </div>
+        </Fragment>
     );
 };
 
 const mapStateToProps = createStructuredSelector({
+    categoryPageTitle: selectCategoryTitle,
+    isCategories: selectIsCategories,
     selectedCategory: selectSelectedCategory
 });
 
@@ -75,4 +79,4 @@ const mapDispatchToProps = dispatch => ({
     updateCategory: category => dispatch(updateCategory(category))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryForm));
